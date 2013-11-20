@@ -1,0 +1,248 @@
+:version 1.10
+:name VICON
+:units
+  mass 1.0
+  length .045
+  angle deg
+:documentation
+  Carnegie Mellon University Motion Capture Lab
+  Written by WriteAsfAmc.cpp
+:root
+  order TX TY TZ RX RY RZ
+  axis XYZ
+  position 0 0 0
+  orientation 0 0 0
+:bonedata
+ begin
+   id 0
+   name pelvis
+   direction 1 0 0
+   length 0
+   axis 90 -26.4917 1.77685e-15   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 1
+   name lfemur_phantom
+   direction 0 1 0
+   length 0.111568
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 2
+   name lfemur
+   direction 0 0 -1
+   length 0.409849
+   axis -90 -0 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 3
+   name ltibia
+   direction 0 0 -1
+   length 0.433199
+   axis -90 90 0   XYZ
+   dof rx rz
+ end
+ begin
+   id 4
+   name lfoot
+   direction 1 0 0
+   length 0.0981022
+   axis 90 45 180   XYZ
+   dof rx rz
+ end
+ begin
+   id 5
+   name ltoes
+   direction 1 0 0
+   length 0.0327007
+   axis 0 -0 90   XYZ
+   dof rx
+ end
+ begin
+   id 6
+   name rfemur_phantom
+   direction 0 -1 0
+   length 0.111568
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 7
+   name rfemur
+   direction 0 0 -1
+   length 0.409849
+   axis -90 -0 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 8
+   name rtibia
+   direction 0 0 -1
+   length 0.433199
+   axis -90 90 0   XYZ
+   dof rx rz
+ end
+ begin
+   id 9
+   name rfoot
+   direction 1 0 0
+   length 0.0981022
+   axis 90 45 180   XYZ
+   dof rx rz
+ end
+ begin
+   id 10
+   name rtoes
+   direction 1 0 0
+   length 0.0327007
+   axis 0 -0 90   XYZ
+   dof rx
+ end
+ begin
+   id 11
+   name lowerback_phantom
+   direction -0.446068 0 0.894999
+   length 0.112091
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 12
+   name lowerback
+   direction 0.359544 0 0.933128
+   length 0.150937
+   axis -90 90 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 13
+   name upperback
+   direction 1 0 0
+   length 0
+   axis 90 -0 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 14
+   name lclavicle_phantom
+   direction 0 0 1
+   length 0.243225
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 15
+   name lclavicle
+   direction 0 0.995491 -0.0948532
+   length 0.170508
+   axis 45 90 45   XYZ
+   dof rx rz
+ end
+ begin
+   id 16
+   name lhumerus
+   direction 0 0 -1
+   length 0.314713
+   axis -90 -0 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 17
+   name lradius
+   direction 0 0 -1
+   length 0.25
+   axis -90 90 0   XYZ
+   dof rx rz
+ end
+ begin
+   id 18
+   name lhand
+   direction 0 0 -1
+   length 0.0833333
+   axis -90 -1.27222e-14 90   XYZ
+   dof rx rz
+ end
+ begin
+   id 19
+   name rclavicle_phantom
+   direction 0 0 1
+   length 0.243225
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 20
+   name rclavicle
+   direction 0 -0.995491 -0.0948532
+   length 0.170508
+   axis 45 90 45   XYZ
+   dof rx rz
+ end
+ begin
+   id 21
+   name rhumerus
+   direction 0 0 -1
+   length 0.314713
+   axis -90 -0 0   XYZ
+   dof rx ry rz
+ end
+ begin
+   id 22
+   name rradius
+   direction 0 0 -1
+   length 0.248045
+   axis -90 90 0   XYZ
+   dof rx rz
+ end
+ begin
+   id 23
+   name rhand
+   direction 0 0 -1
+   length 0.0826817
+   axis -90 -1.27222e-14 90   XYZ
+   dof rx rz
+ end
+ begin
+   id 24
+   name neck_phantom
+   direction 0 0 1
+   length 0.290203
+   axis 0 -0 0   XYZ
+   dof
+ end
+ begin
+   id 25
+   name neck
+   direction 0 0 1
+   length 0.0967343
+   axis 151.122 -90 28.8781   XYZ
+   dof rx ry rz
+ end
+:hierarchy
+  begin
+    root pelvis 
+    pelvis lfemur_phantom rfemur_phantom lowerback_phantom
+    lfemur_phantom lfemur
+    lfemur ltibia
+    ltibia lfoot
+    lfoot ltoes
+    rfemur_phantom rfemur
+    rfemur rtibia
+    rtibia rfoot
+    rfoot rtoes
+    lowerback_phantom lowerback
+    lowerback upperback
+    upperback lclavicle_phantom rclavicle_phantom neck_phantom
+    lclavicle_phantom lclavicle
+    lclavicle lhumerus
+    lhumerus lradius
+    lradius lhand
+    rclavicle_phantom rclavicle
+    rclavicle rhumerus
+    rhumerus rradius
+    rradius rhand
+    neck_phantom neck
+  end
