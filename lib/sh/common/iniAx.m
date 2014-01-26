@@ -61,7 +61,12 @@ if ~isempty(siz)
         pos0(4) = siz(1);
     end
 
-    set(gcf, 'Position', pos0);
+    % on Windows
+    if ispc
+        pos0(1 : 2) = [100 100];
+    end
+    
+    set(gcf, 'Position', pos0);    
 end
 
 % axes size

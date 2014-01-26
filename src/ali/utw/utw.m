@@ -5,7 +5,7 @@ function ali = utw(Xs, bas, aliT)
 %   Scaling and time warping in time series querying, VLDB, 2008
 %
 % Input
-%   Xs      -  sequences, 1 x m (cell), di x ni
+%   Xs      -  sequences or sequence lengths, 1 x m (cell), di x ni | 1 x m
 %   bas     -  bases, [] | 1 x m (cell)
 %   aliT    -  ground-truth alignment, [] | struct
 %
@@ -15,7 +15,7 @@ function ali = utw(Xs, bas, aliT)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 04-11-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-26-2013
 
 % dimension
 if iscell(Xs)
@@ -42,11 +42,10 @@ else
     as = cellss(1, m);
     P = zeros(l, m);
     for i = 1 : m
-        as{i} = baTemFit(linspace(1, ns(i), l), bas{i}, 'matlab');
+        as{i} = baTemFit(linspace(1, ns(i), l), bas{i});
         P(:, i) = bas{i}.P * as{i};
     end
     ali.a = mcat('vert', as);
-    
 end
 
 % store

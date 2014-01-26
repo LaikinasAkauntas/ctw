@@ -14,7 +14,7 @@ function h = shs(Xs, parMk, parAx, varargin)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 03-31-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 05-04-2013
 
 % show option
 psSh(varargin);

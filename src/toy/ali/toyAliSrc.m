@@ -24,13 +24,14 @@ function wsSrc = toyAliSrc(tag, l, m, varargin)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 03-17-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-17-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-16-2013
 
 % save option
 prex = cellStr(tag, l, m);
-[svL, path] = psSv(varargin, 'prex', prex, ...
-                             'subx', 'src', ...
-                             'fold', 'toy/ali');
+[svL, path] = psSv(varargin, ...
+                   'prex', prex, ...
+                   'subx', 'src', ...
+                   'fold', 'toy/ali');
 
 % load
 if svL == 2 && exist(path, 'file')
@@ -38,7 +39,7 @@ if svL == 2 && exist(path, 'file')
     wsSrc = matFld(path, 'wsSrc');
     return;
 end
-prIn('toyAliSrc', 'new, %s', prex);
+prIn('toyAliSrc', 'new, tag %d, l %d, m %d', tag, l, m);
 
 % latent sequence
 X0 = toyLatSeq(tag, l);

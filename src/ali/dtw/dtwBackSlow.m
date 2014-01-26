@@ -29,7 +29,7 @@ function [P, W] = dtwBackSlow(S)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 02-16-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-13-2013
 
 [n1, n2] = size(S);
 maM = n1 + n2;
@@ -65,5 +65,5 @@ P(n0 + 1 : end, :) = [];
 P = P(end : -1 : 1, :);
 
 % warping matrix
-Ws = P2W(P);
+Ws = aliP2W(P);
 W = Ws{1} * Ws{2}';

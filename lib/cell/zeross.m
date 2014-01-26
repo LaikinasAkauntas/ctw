@@ -1,4 +1,4 @@
-% function varargout = zeross(varargin)
+function varargout = zeross(varargin)
 % Produce numerous zero matrix.
 %
 % Input
@@ -9,4 +9,9 @@
 %
 % History
 %   create     -  Feng Zhou (zhfe99@gmail.com), 02-13-2009
-%   modify     -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify     -  Feng Zhou (zhfe99@gmail.com), 09-08-2012
+
+% dimension
+for i = 1 : nargout
+    varargout{i} = zeros(varargin{:});
+end

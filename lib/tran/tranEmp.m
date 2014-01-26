@@ -9,7 +9,7 @@ function flag = tranEmp(tran)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 02-16-2012
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 03-19-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-22-2012
 
 flag = false;
 
@@ -23,8 +23,10 @@ end
 
 % similarity transform
 if strcmp(algT, 'sim')
+    R = ps(tran, 'R', []);
     s = ps(tran, 's', []);
-    if isempty(s)
+    t = ps(tran, 't', []);
+    if isempty(R) || isempty(s) || isempty(t)
         flag = true;
         return;
     end
@@ -32,7 +34,8 @@ if strcmp(algT, 'sim')
 % affine transform
 elseif strcmp(algT, 'aff')
     V = ps(tran, 'V', []);
-    if isempty(V)
+    t = ps(tran, 't', []);
+    if isempty(V) || isempty(t)
         flag = true;
         return;
     end
@@ -40,7 +43,10 @@ elseif strcmp(algT, 'aff')
 % non-rigid transform
 elseif strcmp(algT, 'non')
     W = ps(tran, 'W', []);
-    if isempty(W)
+    P = ps(tran, 'P', []);
+    sigW = ps(tran, 'sigW', []);
+    lamW = ps(tran, 'lamW', []);
+    if isempty(W) || isempty(P) || isempty(sigW) || isempty(lamW)
         flag = true;
         return;
     end

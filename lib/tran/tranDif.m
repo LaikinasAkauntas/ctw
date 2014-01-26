@@ -12,7 +12,7 @@ function flag = tranDif(tran1, tran2, par)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 02-16-2012
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 02-16-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-22-2012
 
 % function option
 th = ps(par, 'th', 1e-6);
@@ -43,6 +43,15 @@ elseif strcmp(algT, 'aff')
         flag = true;
     end
 
+% non-rigid transform
+elseif strcmp(algT, 'non')
+    W1 = tran1.W;
+    W2 = tran2.W;
+    
+    if max(abs(W1(:) - W2(:))) < th
+        flag = true;
+    end
+    
 else
     error('unknown transformation name: %s', algT);
 end

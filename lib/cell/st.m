@@ -18,7 +18,11 @@ function a = st(varargin)
 %
 % History
 %   create     -  Feng Zhou (zhfe99@gmail.com), 11-19-2010
-%   modify     -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify     -  Feng Zhou (zhfe99@gmail.com), 11-28-2012
+
+if nargin == 0 || nargin == 1
+    a = [];
+end
 
 for i = 1 : 2 : nargin
     a.(varargin{i}) = varargin{i + 1};

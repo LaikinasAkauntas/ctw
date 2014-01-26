@@ -5,24 +5,20 @@ function ha = shM(M, varargin)
 %   M        -  matrix, n1 x n2
 %   varargin
 %     show option
-%     dis    -  display type, {'imagesc'} | 'contour'
+%     dis    -  display function, {'imagesc'} | 'contour'
 %     clMap  -  color map, {'gray'}
 %     bar    -  bar flag, 'y' | {'n'}
 %     eq     -  axis equal flag, 'y' | {'n'}
 %     P      -  warping path, {[]}
 %     lnWid  -  line width, {1}
 %     lnCl   -  line color (for boundary), {'r'}
-%     num    -  number flag, 'y' | {'n'}
-%     numM   -  number matrix, {M}
-%     form   -  number display form, {'%d'}
-%     ftSiz  -  font size, {12}
 %
 % Output
 %   ha       -  figure handle
 %
 % History
 %   create   -  Feng Zhou (zhfe99@gmail.com), 12-29-2008
-%   modify   -  Feng Zhou (zhfe99@gmail.com), 04-17-2012
+%   modify   -  Feng Zhou (zhfe99@gmail.com), 04-24-2013
 
 % show option
 psSh(varargin);
@@ -38,10 +34,6 @@ Ps = ps(varargin, 'Ps', []);
 lnMk = ps(varargin, 'lnMk', '-');
 lnWid = ps(varargin, 'lnWid', 1);
 lnCl = ps(varargin, 'lnCl', 'r');
-isNum = psY(varargin, 'num', 'n');
-numM = ps(varargin, 'numM', M);
-form = ps(varargin, 'form', '%d');
-ftSiz = ps(varargin, 'ftSiz', 12);
 cmap = ps(varargin, 'cmap', []);
 clim = ps(varargin, 'clim', []);
 
@@ -51,7 +43,6 @@ if strcmp(dis, 'imagesc')
     if strcmp(clMap, 'grayc')
         M = repmat(M, [1 1 3]);
     end
-
     if isempty(clim)
         ha.M = imagesc(M);
     else
@@ -74,6 +65,8 @@ elseif strcmp(clMap, 'hsv')
     ha.cmap = colormap(hsv);
 elseif strcmp(clMap, 'jet')
     ha.cmap = colormap(jet);
+elseif strcmp(clMap, 'hot')
+    ha.cmap = colormap(hot);    
 else
     error('unknown color map: %s', clMap);
 end
@@ -94,4 +87,15 @@ set(gca, 'ticklength', [0 0]);
 % color bar
 if isBar
     colorbar;
+end
+
+% warping path
+if ~isempty(P)
+    plot(P(:, 2), P(:, 1), lnMk, 'Color', lnCl, 'LineWidth', lnWid);
+end
+if ~isempty(Ps)
+    for i = 1 : length(Ps)
+        P = Ps{i};
+        plot(P(:, 2), P(:, 1), '--', 'Color', 'g', 'LineWidth', lnWid);
+    end    
 end

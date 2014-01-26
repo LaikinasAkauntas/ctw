@@ -2,16 +2,19 @@ function Pt = tranRun(Pt0, tran)
 % Transform a point set.
 %
 % Input
-%   Pt0     -  original point set, 2 x n
+%   Pt0     -  original point set, d x n
 %   tran    -  transformation
 %     algT  -  transformation name, 'sim' | 'aff' | 'non'
+%     P     -  basis point for computing RBF kernel (used if algT == 'non')
+%     sigW  -  sigma for computing RBF kernel (used if algT == 'non')
+%     lamW  -  lambda (used if algT == 'non')
 %
 % Output
 %   Pt      -  new point set, 2 x n
-%
-% History
+%           
+% History   
 %   create  -  Feng Zhou (zhfe99@gmail.com), 08-11-2011
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 03-20-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-04-2012
 
 % transformation name
 algT = tran.algT;
@@ -38,10 +41,24 @@ elseif strcmp(algT, 'aff')
 % non-rigid transform
 elseif strcmp(algT, 'non')
     % parameter
-    [W, K] = stFld(tran, 'W', 'K');
+    [P, W, sigW] = stFld(tran, 'P', 'W', 'sigW');
     
+    % RBF kernel
+    D = conDst(P, Pt0);
+    K = exp(-D / (2 * sigW ^ 2));
+
+    % debug
+%    shM(K, 'fig', 1);
+
     % shift
-    Pt = Pt0 + W * Kw;
+    Pt = Pt0 + W * K;
+    
+    % additional rotation
+    R = ps(tran, 'R', []);
+    s = ps(tran, 's', []);
+    if ~isempty(R) && ~isempty(s)
+        Pt = s * R * Pt;
+    end
     
 % TPS (need to be improved)
 elseif strcmp(algT, 'tps')

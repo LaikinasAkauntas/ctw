@@ -12,10 +12,10 @@ function ali = ctw(Xs, ali0, aliT, parCtw, parCca, parDtw)
 %   aliT     -  ground-truth alignment (can be [])
 %   parCtw   -  parameter for CTW
 %     th     -  stop threshold, {.01}
-%     nItMa  -  maximum iteration number, {100}
+%     nItMa  -  maximum iteration number, {50}
 %     debg   -  debug flag, 'y' | {'n'}
 %     fig    -  figure used for debugging, {11}
-%   parCca   -  parameter for CCA. See function cca for more details
+%   parCca   -  parameter for CCA. See function mcca for more details
 %   parDtw   -  parameter for DTW. See function dtw for more details
 %
 % Output
@@ -27,28 +27,28 @@ function ali = ctw(Xs, ali0, aliT, parCtw, parCca, parDtw)
 %
 % History
 %   create   -  Feng Zhou (zhfe99@gmail.com), 05-20-2009
-%   modify   -  Feng Zhou (zhfe99@gmail.com), 04-16-2012
+%   modify   -  Feng Zhou (zhfe99@gmail.com), 05-04-2013
 
 % function parameter
 th = ps(parCtw, 'th', .01);
-nItMa = ps(parCtw, 'nItMa', 100);
+nItMa = ps(parCtw, 'nItMa', 50);
 isDebg = psY(parCtw, 'debg', 'n');
 fig = ps(parCtw, 'fig', 11);
 
 % dimension
 m = length(Xs);
-n1 = size(Xs{1}, 2);
-n2 = size(Xs{2}, 2);
-prIn('ctw', '1st seq %d, 2nd seq %d', n1, n2);
+[d1, n1] = size(Xs{1});
+[d2, n2] = size(Xs{2});
+prIn('ctw', '1st seq %d x %d, 2nd seq %d x %d', d1, n1, d2, n2);
 
 % homogeneous coordinate
-Xs = homoX(Xs);
+Xs = homoX(Xs, 1);
 
-% debug
+% debug - initialize axes for plotting
 if isDebg
     rows = 3; cols = 5;
     Ax1 = iniAx(fig, rows, cols, [250 * rows, 250 * cols + 250], 'pos', [0 0 .8 1]);
-    set(Ax1{2, 1}, 'Visible', 'off');
+    set(Ax1{2, 1}, 'visible', 'off');
 
     rows = m; cols = 1;
     Ax2 = iniAx(0, rows, cols, [], 'pos', [.8 0 .2 1], 'hGap', .2);
@@ -57,37 +57,58 @@ else
     Ax2 = [];
 end
 
-% coordinate-descent search
+% initial alignment
+ali0.P = round(ali0.P);
 ali = ali0;
+
+% coordinate-descent search
 [objs, its] = zeross(1, nItMa);
 prCIn('EM', nItMa, .1);
 for nIt = 1 : 2 : nItMa
     prC(nIt);
 
-    % update spatial transformation
+    % do the operation: X W_x and Y W_y, given the alignment
     Ys = seqInp(Xs, ali0.P, parDtw);
+    
+    % compute spatial transformation using CCA
     ali.Vs = mcca(Ys, parCca);
 
+    % compute objective value
     objs(nIt) = gtwObj(Xs, ali, parCca, parDtw);
+    
+    % iteration tag
     its(nIt) = a2it('spa');
+    
+    % calculate the dimension of CCA at the first step, always use it for the remaining steps
     if nIt == 1
         parCca.d = size(ali.Vs{1}, 2) - 1;
     end
+
+    % debug
     debg(isDebg, Ax1, Ax2, nIt, objs, its, Xs, aliT, ali, parCca, parDtw);
 
-    % update temporal warping
+    % do the operation: V_x X and V_y Y, given the embedding
     Ys = cellTim(cellTra(ali.Vs), Xs);
+    
+    % compute temporal alignment using DTW
     aliD = dtw(Ys, [], parDtw);
     ali.P = aliD.P;
 
+    % compute objective value
     objs(nIt + 1) = gtwObj(Xs, ali, parCca, parDtw);
+    
+    % iteration tag
     its(nIt + 1) = a2it('tem');
+    
+    % debug
     debg(isDebg, Ax1, Ax2, nIt + 1, objs, its, Xs, aliT, ali, parCca, parDtw);
 
     % stop condition
     if pDif(ali.P, ali0.P) <= th
         break;
     end
+    
+    % save the alignment for initalizing the next iteration
     ali0 = ali;
 end
 prCOut(nIt + 1);
@@ -185,7 +206,7 @@ if ~isempty(aliT)
 else
     alis = {ali0, ali};
 end
-shAlis(alis, 'ax', Ax1{3, 1});
+shAlis2d(alis, 'ax', Ax1{3, 1});
 
 % transformation
 for i = 1 : length(Xs)

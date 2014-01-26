@@ -14,7 +14,7 @@ function shIt(Obj, its, varargin)
 %
 % History
 %   create   -  Feng Zhou (zhfe99@gmail.com), 09-20-2009
-%   modify   -  Feng Zhou (zhfe99@gmail.com), 02-07-2012
+%   modify   -  Feng Zhou (zhfe99@gmail.com), 11-08-2012
 
 % show option
 psSh(varargin);
@@ -81,5 +81,9 @@ elseif nIt >= itMa
 end
 mi = min(Obj(:));
 if nIt > itMa && ma > eps
-    ylim([mi ma * 1.1]);
+    if ma > mi + eps
+        ylim([mi, ma + (ma - mi) * 1.1]);
+    else
+        ylim([mi, ma * 1.1]);
+    end
 end

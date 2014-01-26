@@ -3,7 +3,7 @@ function blocks = vec2block(a, n)
 %
 % Input
 %   a       -  the vector, 1 x na
-%   n       -  number of blocks
+%   n       -  #blocks
 %
 % Output
 %   blocks  -  the blocks, 1 x n (cell)

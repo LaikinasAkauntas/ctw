@@ -1,8 +1,9 @@
-% Demo file for aligning kitchen sequence using CTW.
+% A demo for aligning two subjects opening cabinet using CTW.
+% This is the same function used for visualizing (Fig. 4) the second experiment (Sec 5.2) in the CTW paper.
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 01-20-2012
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-17-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 05-05-2013
 
 clear variables;
 prSet(4);
@@ -15,13 +16,12 @@ feats = {'XQ', 'XQ'};
 parPca = st('d', .99);
 
 %% algorithm parameter
-parDtw = st('dp', 'c');
-parCtw = st('th', 0, 'debg', 'n');
-parCca = st('d', .8, 'lams', .6);
+parDtw = [];
+parCca = st('d', .8, 'lams', .6); % CCA: reduce dimension to keep at least 0.8 energy, set the regularization weight to .6
+parCtw = st('debg', 'n');
 
 %% src
 wsSrc = kitAliSrc(act, subIdx, rann, 'svL', 2);
-%aliT = wsSrc.aliT;
 
 %% data
 wsData = kitAliData(wsSrc, 'svL', 2);
@@ -37,7 +37,7 @@ aliDtw = dtw(Xs, [], parDtw);
 %% ctw
 aliCtw = ctw(Xs, aliDtw, [], parCtw, parCca, parDtw);
 
-%% show sequence
+%% show sequences
 rows = 1; cols = 3;
 axs = iniAx(3, rows, cols, [300 * rows, 300 * cols]);
 
@@ -54,12 +54,18 @@ YYs = pcas(Ys, parPca);
 shs(YYs, parMk, parAx, 'ax', axs{1, 2});
 title('CTW');
 
-shAlis({aliDtw, aliCtw}, 'legs', {'dtw', 'ctw'}, 'ax', axs{1, 3});
+shAlis2d({aliDtw, aliCtw}, 'legs', {'dtw', 'ctw'}, 'ax', axs{1, 3});
 hold on;
 plot([1, 831], [496 496], '--k');
 plot([597, 597], [1 779], '--k');
 
-%% show keyframe
+%% show keyframes aligned by DTW
+lNew = 10;
+rows = 2; cols = lNew;
+Ax = iniAx(6, rows, cols, [80 * rows, 100 * cols], 'wGap', .1, 'hGap', .1);
+shMocAliFr(wsSrc, wsData, aliDtw, lNew, Ax, 'all', 'n');
+
+%% show keyframes aligned by CTW
 lNew = 10;
 rows = 2; cols = lNew;
 Ax = iniAx(5, rows, cols, [80 * rows, 100 * cols], 'wGap', .1, 'hGap', .1);

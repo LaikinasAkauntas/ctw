@@ -9,7 +9,7 @@ function tran = tranInv(tran0)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 03-19-2012
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 03-19-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-21-2012
 
 % transformation name
 algT = tran0.algT;
@@ -37,8 +37,8 @@ elseif strcmp(algT, 'aff')
     tran = st('algT', algT, 'V', V, 't', t);
     
 % non-rigid transform
-%elseif strcmp(algT, 'non')
-
+elseif strcmp(algT, 'non')
+    tran = tran0;
 else
     error('unknown transformation name: %s', algT);
 end

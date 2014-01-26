@@ -1,6 +1,9 @@
 function [Ys, Zs, Us] = gtwTra(Xs, ali, parV, parP)
 % Transformation of sequence.
 %
+% Remark
+%   Ys{i} = Vs{i}' * Xs{i} * Ws{i}
+%
 % Input
 %   Xs      -  sequence, 1 x m (cell), di x ni
 %   ali     -  alignment
@@ -17,7 +20,7 @@ function [Ys, Zs, Us] = gtwTra(Xs, ali, parV, parP)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 09-06-2010
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 04-22-2013
 
 % function parameter
 lams = ps(parV, 'lams', []);

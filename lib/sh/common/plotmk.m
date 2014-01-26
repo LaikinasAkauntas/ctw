@@ -24,7 +24,7 @@ function ha = plotmk(X, c, parMk)
 %
 % History
 %   create   -  Feng Zhou (zhfe99@gmail.com), 11-19-2010
-%   modify   -  Feng Zhou (zhfe99@gmail.com), 10-17-2011
+%   modify   -  Feng Zhou (zhfe99@gmail.com), 06-24-2012
 
 % function parameter
 ln = ps(parMk, 'ln', []);
@@ -35,7 +35,8 @@ mks = ps(parMk, 'mks', {'o', 's', '^', 'd', '+', 'x', 'v', '>', '*'});
 cls = ps(parMk, 'cls', {[1 0 0], [0 0 1], [0 1 0], [1 0 1], [0 0 0], [1 .5 0], [.7 .7 .7], [.1 .1 .1], [.4 .4 .7], [.1 .1 .1], [1 .8 0], [1, .4, .6]});
 lnWid = ps(parMk, 'lnWid', 1);
 mkSiz = ps(parMk, 'mkSiz', 5);
-isMkEg = psY(parMk, 'mkEg', 'n');
+mkEgWid = ps(parMk, 'mkEgWid', 0);
+mkEgCl = ps(parMk, 'mkEgCl', 'k');
 isFace = psY(parMk, 'face', 'y');
 
 % line
@@ -74,7 +75,7 @@ if lnWid > 0 && mkSiz > 0
     else
         set(ha, 'Color', cl, 'LineWidth', lnWid, 'Marker', mk, 'MarkerSize', mkSiz);
     end
-    if isMkEg
+    if mkEgWid > 0        
         set(ha, 'MarkerEdgeColor', 'k');
     end
 
@@ -85,13 +86,17 @@ elseif lnWid == 0 && mkSiz > 0
     else
         ha = plot3(X(1, :), X(2, :), X(3, :), mk);
     end
+    
+    % face
     if isFace
         set(ha, 'Color', cl, 'Marker', mk, 'MarkerSize', mkSiz, 'MarkerFaceColor', cl);
     else
         set(ha, 'Color', cl, 'Marker', mk, 'MarkerSize', mkSiz);
     end
-    if isMkEg
-        set(ha, 'MarkerEdgeColor', 'k');
+    
+    % marker edge
+    if mkEgWid > 0
+        set(ha, 'MarkerEdgeColor', mkEgCl, 'linewidth', mkEgWid);
     end
 
 % plot line only

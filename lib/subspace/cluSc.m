@@ -15,7 +15,7 @@ function [G, Y] = cluSc(K, k)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 01-22-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 12-17-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 07-25-2012
 
 % global kernel
 global KG;
@@ -46,4 +46,5 @@ end
 X = diag(tmp) \ X;
 
 % k-means
-G = kmean(X', k);
+[~, labs] = kmeanFast(X, k);
+G = L2G(labs, k);

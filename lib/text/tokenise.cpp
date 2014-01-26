@@ -1,8 +1,8 @@
 #include "mex.h"
 #include "string.h"
 
-#define MAX_LEN 1000
-#define MAX_NUM_TOKEN 1000
+#define MAX_LEN 100000
+#define MAX_NUM_TOKEN 10000
 
 /*
  * function tokens = tokenise(s, delim)

@@ -9,7 +9,7 @@ function str = cellStr(varargin)
 %
 % History
 %   create    -  Feng Zhou (zhfe99@gmail.com), 11-18-2010
-%   modify    -  Feng Zhou (zhfe99@gmail.com), 02-14-2012
+%   modify    -  Feng Zhou (zhfe99@gmail.com), 06-15-2012
 
 % dimension
 m = nargin;
@@ -17,7 +17,7 @@ m = nargin;
 strs = cell(1, m);
 for i = 1 : m
     a = varargin{i};
-    if isa(a, 'numeric')
+    if isa(a, 'numeric') || isa(a, 'logical')
         strs{i} = mat2str(a);
     elseif isa(a, 'char')
         strs{i} = a;

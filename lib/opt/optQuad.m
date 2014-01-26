@@ -1,4 +1,4 @@
-function x = optQuad(alg, H, f, A, blc, buc, blx, bux, x0)
+function x = optQuad(alg, H, f, AEq, bEq, A, blc, buc, blx, bux, x0)
 % Quadratic Programming.
 %
 % Math
@@ -22,7 +22,7 @@ function x = optQuad(alg, H, f, A, blc, buc, blx, bux, x0)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 10-16-2010
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 10-09-2011
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 08-29-2012
 
 % enfore H to be symmetric
 H = (H + H') / 2;
@@ -31,15 +31,15 @@ if issparse(H)
 end
 
 % rank
-if rank(H) < size(H, 1)
+%if rank(H) < size(H, 1)
 %     warning('MATLAB:LoadErr', 'rank-deficient');
-end
+%end
 
 % matlab
 if strcmp(alg, 'matlab')
     warning off;
     option = optimset('Display', 'off', 'LargeScale', 'on');
-    x = quadprog(H, f, A, buc, [], [], blx, bux, x0, option);
+    x = quadprog(H, f, A, buc, AEq, bEq, blx, bux, x0, option);
     warning on;
 
 % mosek

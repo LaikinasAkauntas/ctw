@@ -13,7 +13,7 @@ function [Z, A, R, T] = mkprocrust(ipts, opts)
 %
 % History
 %   create  -  Feng Zhou (zhfe99@gmail.com), 01-03-2009
-%   modify  -  Feng Zhou (zhfe99@gmail.com), 02-16-2012
+%   modify  -  Feng Zhou (zhfe99@gmail.com), 06-10-2012
 
 % construct input matrix
 A = zeros(size(ipts, 1) * 2, 4);
@@ -29,7 +29,7 @@ B = zeros(size(ipts, 1) * 2, 1);
 B(1 : 2 : end) = opts(:, 1);         % x'
 B(2 : 2 : end) = opts(:, 2);         % y'
 
-% Solve for similarity
+% solve for similarity
 X = A \ B;
 T = X';
 a = T(1);
