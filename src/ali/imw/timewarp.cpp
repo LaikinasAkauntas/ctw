@@ -4,7 +4,8 @@
 
 void mexFunction(int nlhs, mxArray *plhs[ ], int nrhs, const mxArray *prhs[ ]) {
 
-    int i, j, n1, n2, k, p, p2, p3, c, dims[3];
+    int i, j, n1, n2, k, p, p2, p3, c;//, dims[3];
+    mwSize* dims = new mwSize[3];
     double *D, *A, *P, *L;
     double d, v, a;
     
